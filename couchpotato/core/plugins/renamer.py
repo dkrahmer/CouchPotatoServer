@@ -1,4 +1,4 @@
-import fnmatch
+﻿import fnmatch
 import os
 import re
 import shutil
@@ -679,6 +679,12 @@ class Renamer(Plugin):
                         self.deleteEmptyFolder(group_folder)
                 except:
                     log.error('Failed removing %s: %s', (group_folder, traceback.format_exc()))
+
+            try:
+                # Remove the movie from the wanted list
+                fireEvent('media.delete', media_id = group['media'].get('_id'), delete_from = 'wanted')
+            except:
+                log.error('Failed to remove "%s" from the wanted list.', media_title)
 
             # Notify on download, search for trailers etc
             download_message = 'Downloaded %s (%s%s)' % (media_title, replacements['quality'], (' ' + replacements['3d']) if replacements['3d'] else '')
