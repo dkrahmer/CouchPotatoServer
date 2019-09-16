@@ -42,7 +42,10 @@ class XBMC(Notification):
                 if data and data.get('destination_dir') and (not self.conf('only_first') or hosts.index(host) == 0):
                     param = {}
                     if not self.conf('force_full_scan') and (self.conf('remote_dir_scan') or socket.getfqdn('localhost') == socket.getfqdn(host.split(':')[0])):
-                        param = {'directory': data['destination_dir']}
+                        directory = data['destination_dir']
+                        if self.conf('local_folder_search') and self.conf('local_folder_replace'):
+                            directory = directory.replace(self.conf('local_folder_search'), self.conf('local_folder_replace'), 1)
+                        param = {'directory': directory}
 
                     calls.append(('VideoLibrary.Scan', None, param))
 
@@ -234,6 +237,7 @@ config = [{
                 {
                     'name': 'host',
                     'default': 'localhost:8080',
+                    'description': ('Multiple allowed if separated by comma (,).', 'The same username and password are used for each.'),
                 },
                 {
                     'name': 'username',
@@ -258,6 +262,20 @@ config = [{
                     'type': 'bool',
                     'advanced': True,
                     'description': ('Only scan new movie folder at remote Kodi servers.', 'Useful if the Kodi path is different from the path CPS uses.'),
+                },
+                {
+                    'name': 'local_folder_search',
+                    'label': 'Folder Search Str',
+                    'default': '/MyLocal/MoviesDir/',
+                    'advanced': True,
+                    'description': ('Translate the local path to the remote path (find this).', 'Useful if the Kodi path is different from the path CPS uses.'),
+                },
+                {
+                    'name': 'local_folder_replace',
+                    'label': 'Folder Replace Str',
+                    'default': 'smb://SERVER/',
+                    'advanced': True,
+                    'description': ('Translate the local path to the remote path (replace with this).', 'Useful if the Kodi path is different from the path CPS uses.'),
                 },
                 {
                     'name': 'force_full_scan',
