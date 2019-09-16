@@ -436,6 +436,15 @@ config = [{
                     'advanced': True,
                     'description': 'Disable this downloader for automated searches, but use it when I manually send a release.',
                 },
+                {
+                    'name': 'enable_magnet_torrent_files',
+                    'order': 15,
+                    'label': 'Use magnet torrent files',
+                    'default': True,
+                    'advanced': True,
+                    'type': 'bool',
+                    'description': 'Places a magnet link directly to the torrent client without attempting to do convert to traditional torrent file. Prevents failed magnet to torrent conversion.',
+                },
             ],
         }
     ],

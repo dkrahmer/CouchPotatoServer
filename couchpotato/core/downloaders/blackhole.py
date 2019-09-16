@@ -179,6 +179,14 @@ config = [{
                     'values': [('usenet & torrents', 'both'), ('usenet', 'nzb'), ('torrent', 'torrent')],
                 },
                 {
+                    'name': 'enable_magnet_torrent_files',
+                    'label': 'Use magnet torrent files',
+                    'default': True,
+                    'advanced': True,
+                    'type': 'bool',
+                    'description': 'rTorrent only. Places a magnet link directly to the torrent client without attempting to do convert to traditional torrent file. Prevents failed magnet to torrent conversion.',
+                },
+                {
                     'name': 'create_subdir',
                     'default': 0,
                     'type': 'bool',

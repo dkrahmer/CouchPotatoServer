@@ -132,6 +132,11 @@ class DownloaderBase(Provider):
         if len(torrent_hash) == 32:
             torrent_hash = b16encode(b32decode(torrent_hash))
 
+        if self.conf('enable_magnet_torrent_files', default = False):
+            filedata = "d10:magnet-uri%d:%se" % (len(magnet_link), magnet_link)
+            log.debug('Magnet torrent filedata: %s', (filedata))
+            return filedata
+
         sources = self.torrent_sources
         random.shuffle(sources)
 
